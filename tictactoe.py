@@ -5,7 +5,7 @@ import random
 playing = True
 
 def displayBoard():
-    os.system("cls")
+    os.system("clear")
 
     print(f"""
          {awnsers[0]} | {awnsers[1]} | {awnsers[2]}
