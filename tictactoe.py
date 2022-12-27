@@ -2,10 +2,8 @@ import os
 import re
 import random
 
-playing = True
-
 def displayBoard():
-    os.system("cls")
+    os.system("clear")
 
     print(f"""
          {awnsers[0]} | {awnsers[1]} | {awnsers[2]}
@@ -14,6 +12,17 @@ def displayBoard():
         ---+---+---
          {awnsers[6]} | {awnsers[7]} | {awnsers[8]}
     """)
+
+def gameStart():
+    global playing
+    global turn
+    global awnsers
+
+    playing = True
+    turn = "X"
+    awnsers = ["-", "-", "-", "-", "-", "-", "-", "-", "-"]
+
+    displayBoard()
 
 def translateLocation (location):
     if location == "tl": return 0
@@ -25,8 +34,11 @@ def translateLocation (location):
     elif location == "bl": return 6
     elif location == "bm": return 7
     elif location == "br": return 8
+    else: return -1
 
 def gameState(awnsersTemp):
+    global playing
+
     temp = " "
     winner = ""
     players = ["X", "O"]
@@ -45,33 +57,29 @@ def gameState(awnsersTemp):
         elif "-" not in awnsersTemp: winner = "null"
 
         if winner == player:
-            if not input (player + ", congradulations you win!\nWould you like to play again? [y/n] ") == "y" or "Y": playing = False
-            else: winner = ""
+            if not input (player + ", congradulations you win!\nWould you like to play again? [y/n] ") == ("y" or "Y"): playing = False
         elif winner == "null":
-            if not input ("Draw!\nWould you like to play again? [y/n] ") == "y" or "Y": playing = False
-            else: winner = ""
+            if not input ("Draw!\nWould you like to play again? [y/n] ") == ("y" or "Y"): playing = False
 
-playing = True
+        if not playing:
+            os.system("clear")
+            exit()
+        elif not winner == "":
+            gameStart()
 
-while True:
-    turn = "X"
-    playableLocations = ""
-    awnsers = ["-", "-", "-", "-", "-", "-", "-", "-", "-"]
-    displayBoard()
+gameStart()
 
-    while playing:
-        playablePosition = input(f"{turn} -> Please enter a location: ")
+while playing:
+    playablePosition = input(f"{turn} -> Please enter a location: ")
 
-        if translateLocation(playablePosition) == -1 or not awnsers[translateLocation(playablePosition)] == "-":
-            displayBoard()
-            continue
-
-        awnsers[translateLocation(playablePosition)] = turn
-        
-        if turn == "X": turn = "O"
-        elif turn == "O": turn = "X"
-
+    if translateLocation(playablePosition) == -1 or not awnsers[translateLocation(playablePosition)] == "-":
         displayBoard()
-        gameState(awnsers)
+        continue
+
+    awnsers[translateLocation(playablePosition)] = turn
     
-    break
+    if turn == "X": turn = "O"
+    elif turn == "O": turn = "X"
+
+    displayBoard()
+    gameState(awnsers)
