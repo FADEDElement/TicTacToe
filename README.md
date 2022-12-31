@@ -24,6 +24,21 @@ Option 2:
 python tictactoe.py
 ```
 
+### Using the program
+
+When asks you to enter a location you can enter one of the following
+```
+tl - top left corner
+tm - top middle
+tr - top right corner
+ml - middle left
+m  - middle
+mr - middle right
+bl - bottom left corner
+bm - bottom middle
+br - bottom right
+```
+
 ## What I used / learned
 * Dictionaries
 * Functions
@@ -38,6 +53,10 @@ Contributors names and contact info
 
 ## Version History
 
+* 2.1
+    * Fixed game restart bug
+    * Fixed console clear bug (console clear only works for linux at the moment)
+    * Fixed wrong command bug
 * 2.0
     * Major code optimizations
 * 1.0
